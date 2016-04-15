@@ -35,30 +35,38 @@ class Todo(db.Model):
     body = db.Column(db.String)
     done = db.Column(db.Boolean)
     publication_date = db.Column(db.DateTime)
+    priority = db.Column(db.Integer)
 
-    def __init__(self, user: User, title: str, body: str):
-        previous_id = Todo.query.with_entities(func.max(Todo.user_exposed_id)).filter(Todo.user_id == user.id).scalar()
-        self.user_exposed_id = previous_id + 1 if previous_id is not None else 0
-        print("USER EXPOSED ID: " + str(self.user_exposed_id))
+    def __init__(self, user: User, title: str, body: str, priority: int):
+        self.user_exposed_id = Todo._next_user_exposed_id(user)
         self.title = title
         self.body = body
         self.done = False
         self.publication_date = datetime.utcnow()
+        self.priority = priority
+
+    @staticmethod
+    def _next_user_exposed_id(user):
+        previous_id = (Todo.query.with_entities(func.max(Todo.user_exposed_id))
+                       .filter(Todo.user_id == user.id).scalar())
+        return previous_id + 1 if previous_id is not None else 0
 
     @staticmethod
     def from_json(user, json_post):
         title = json_post.get('title')
         body = json_post.get('body')
+        priority = json_post.get("priority")
         if body is None or body == '':
                 raise ValidationError('post does not have a body')
-        return Todo(user, title, body)
+        return Todo(user, title, body, priority)
 
     def to_json(self):
         todo_json = {
-            'id' : self.user_exposed_id,
-            'title' : self.title,
-            'body' : self.body,
-            'done' : self.done
+            'id': self.user_exposed_id,
+            'title': self.title,
+            'body': self.body,
+            'done': self.done,
+            'priority': self.priority
         }
         return todo_json
 
