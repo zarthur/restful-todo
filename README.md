@@ -7,8 +7,8 @@ A RESTful web-based Todo application in Python and Flask
 
 This code is a modification of the code at
 [https://github.com/vahidR/restful-todo](https://github.com/vahidR/restful-todo).
-It has been modified to support instruction regarding accessing REST APIs and
-working with JSON; see
+It has been modified to support instruction regarding the use of REST APIs and
+working with JSON by multiple users; see
 [this](https://github.com/zarthur/CSCC-Fundamentals-Android-Notes/blob/master/week_15/readme.md)
 for an example.
 
@@ -41,6 +41,7 @@ $ python manage.py dropall
 ## RESTful interactions
 
 ### POST a user
+This is currently the **only** way to add a user.
 ```
 curl -H "Content-Type: application/json" -X POST -d '{"username":"username","password":"password"}' -i http://127.0.0.1:5000/todos/api/v1.0/users
 ```

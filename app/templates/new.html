@@ -10,6 +10,7 @@
 
   {{ wtf.form_field(form.title) }}
   {{ wtf.form_field(form.body) }}
+  {{ wtf.form_field(form.priority) }}
   {{ wtf.form_field(form.done) }}
   {{ wtf.form_field(form.submit) }}
   <a href="{{ url_for('main.index') }}"><button type="button" class="btn btn-default">Back to list</button></a>

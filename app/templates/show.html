@@ -13,14 +13,22 @@
 
     <div class="form-group">
         <div class="">
-          <textarea name="body" rows=10 class="form-control input-xlarge" placeholder="describle the todo item" required>{{ todo.body }}</textarea>
+          <textarea name="body" rows=10 class="form-control input-xlarge" placeholder="describe the todo item" required>{{ todo.body }}</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="">
+          <input type="number" id="priority" name="priority" class="form-control input-xlarge"
+            placeholder="todo priority" value="{{ todo.priority }}"
+            required>
         </div>
     </div>
 
     <div class="form-group">
         <div class="">
           <label>Done?</label>
-          <input type=checkbox name=done.{{ todo.id }}{{ "checked" if todo.done }}>
+          <input type=checkbox name=done.{{ todo.user_exposed_id }}{{ "checked" if todo.done }}>
         </div>
     </div>
 
@@ -35,7 +43,7 @@
   </form>
 
   <div class="text-right">
-    <a href="{{ url_for('main.delete', todo_id=todo.id) }}"><button type="submit" class="btn btn-danger">Delete Todo</button></a>
+    <a href="{{ url_for('main.delete', todo_id=todo.user_exposed_id) }}"><button type="submit" class="btn btn-danger">Delete Todo</button></a>
   </div>
 
 {% endblock %}
