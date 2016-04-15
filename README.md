@@ -10,7 +10,7 @@ working with JSON; see
 for an example.
 
 Additional user and basic auth code based on
-[this tutorial]([this tutorial](http://blog.miguelgrinberg.com/post/restful-authentication-with-flask)
+[this tutorial](http://blog.miguelgrinberg.com/post/restful-authentication-with-flask)
 
 
 RESTful Todo Application
