@@ -43,7 +43,7 @@ $ python manage.py dropall
 ### POST a user
 This is currently the **only** way to add a user.
 ```
-curl -H "Content-Type: application/json" -X POST -d '{"username":"username","password":"password"}' -i http://127.0.0.1:5000/todos/api/v1.0/users
+curl -H "Content-Type: application/json" -X POST -d '{"username":"username","password":"password"}' -i http://127.0.0.1:5000/todos/api/v1.0/user/create
 ```
 
 ### GET the List of todos
