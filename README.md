@@ -58,12 +58,12 @@ curl -u test:test -H "Accept: application/json" -i http://localhost:5000/todos/a
 
 ### POST a todo
 ```
-curl -u test:test -H "Content-Type: application/json" -X POST -d '{"title":"Lunch", "body":"Having lunch"}' -i http://localhost:5000/todos/api/v1.0/todo/create
+curl -u test:test -H "Content-Type: application/json" -X POST -d '{"title":"Lunch", "body":"Having lunch", "priority": 3}' -i http://localhost:5000/todos/api/v1.0/todo/create
 ```
 
 ### UPDATE a todo
 ```
-curl -u test:test -H "Content-Type: application/json" -X PUT -d '{"title":"Dinner", "body":"Having Dinner"}' -i http://localhost:5000/todos/api/v1.0/todo/update/<ID>
+curl -u test:test -H "Content-Type: application/json" -X PUT -d '{"title":"Dinner", "body":"Having Dinner", "priority": 2}' -i http://localhost:5000/todos/api/v1.0/todo/update/<ID>
 ```
 
 ### DELETE a todo
