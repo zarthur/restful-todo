@@ -42,31 +42,157 @@ $ python manage.py dropall
 
 ### POST a user
 This is currently the **only** way to add a user.
+
+*Request*
+
 ```
 curl -H "Content-Type: application/json" -X POST -d '{"username":"username","password":"password"}' -i http://127.0.0.1:5000/todos/api/v1.0/user/create
 ```
 
-### GET the List of todos
+*Response*
+
 ```
-curl -u test:test -H "Accept: application/json" -i http://localhost:5000/todos/api/v1.0/todos
+HTTP/1.1 201 CREATED
+Date: Tue, 03 May 2016 00:15:51 GMT
+Server: Werkzeug/0.11.4 Python/3.4.3+
+Content-Type: application/json
+Content-Length: 24
+
+{
+  "username": "username"
+}
+```
+
+### GET the List of todos
+*Request*
+
+```
+curl -u username:password -H "Accept: application/json" -i http://localhost:5000/todos/api/v1.0/todos
+```
+
+*Response*
+
+```
+HTTP/1.1 200 OK
+Date: Tue, 03 May 2016 09:35:58 GMT
+Server: Werkzeug/0.11.4 Python/3.4.3+
+Content-Type: application/json
+Content-Length: 265
+
+{
+  "todos": [
+    {
+      "body": "mow grass",
+      "done": false,
+      "id": 0,
+      "priority": 1,
+      "title": "grass"
+    },
+    {
+      "body": "prepare dinner",
+      "done": false,
+      "id": 1,
+      "priority": 3,
+      "title": "dinner"
+    }
+  ]
+}
 ```
 
 ### GET an individual todo
+*Request*
+
 ```
-curl -u test:test -H "Accept: application/json" -i http://localhost:5000/todos/api/v1.0/todo/<ID>
+curl -u username:password -H "Accept: application/json" -i http://localhost:5000/todos/api/v1.0/todo/<ID>
+```
+
+*Response*
+
+```
+HTTP/1.1 200 OK
+Date: Tue, 03 May 2016 09:37:35 GMT
+Server: Werkzeug/0.11.4 Python/3.4.3+
+Content-Type: application/json
+Content-Length: 116
+
+{
+  "todo": {
+    "body": "mow grass",
+    "done": false,
+    "id": 0,
+    "priority": 1,
+    "title": "grass"
+  }
+}
 ```
 
 ### POST a todo
+*Request*
 ```
-curl -u test:test -H "Content-Type: application/json" -X POST -d '{"title":"Lunch", "body":"Having lunch", "priority": 3}' -i http://localhost:5000/todos/api/v1.0/todo/create
+curl -u username:password -H "Content-Type: application/json" -X POST -d '{"title":"dinner", "body":"prepare dinner", "priority": 3}' -i http://localhost:5000/todos/api/v1.0/todo/create
+```
+
+*Response*
+```
+HTTP/1.1 201 CREATED
+Date: Tue, 03 May 2016 09:31:32 GMT
+Server: Werkzeug/0.11.4 Python/3.4.3+
+Content-Type: application/json
+Content-Length: 96
+
+{
+  "body": "prepare dinner",
+  "done": false,
+  "id": 1,
+  "priority": 3,
+  "title": "dinner"
+}
 ```
 
 ### UPDATE a todo
+*Request*
+
 ```
-curl -u test:test -H "Content-Type: application/json" -X PUT -d '{"title":"Dinner", "body":"Having Dinner", "priority": 2}' -i http://localhost:5000/todos/api/v1.0/todo/update/<ID>
+curl -u username:password -H "Content-Type: application/json" -X PUT -d '{"title":"dinner", "body":"eat dinner", "priority": 2}' -i http://localhost:5000/todos/api/v1.0/todo/update/<ID>
+```
+
+*Response*
+
+```
+HTTP/1.1 200 OK
+Date: Tue, 03 May 2016 09:40:41 GMT
+Server: Werkzeug/0.11.4 Python/3.4.3+
+Content-Type: application/json
+Content-Length: 118
+
+{
+  "todo": {
+    "body": "eat dinner",
+    "done": false,
+    "id": 1,
+    "priority": 2,
+    "title": "dinner"
+  }
+}
 ```
 
 ### DELETE a todo
+*Request*
+
 ```
-curl -u test:test -H "Accept: application/json" -X DELETE http://localhost:5000/todos/api/v1.0/todo/delete/<ID>
+curl -u username:password -H "Accept: application/json" -X DELETE -i http://localhost:5000/todos/api/v1.0/todo/delete/<ID>
+```
+
+*Response*
+
+```
+HTTP/1.1 200 OK
+Date: Tue, 03 May 2016 09:44:43 GMT
+Server: Werkzeug/0.11.4 Python/3.4.3+
+Content-Type: application/json
+Content-Length: 31
+
+{
+  "result": "Todo deleted."
+}
 ```
