@@ -1,9 +1,11 @@
 import re
 import threading
 import unittest
+
 from selenium import webdriver
+
 from app import create_app, db
-from app.models import Todo
+from models import Todo
 
 
 class IntegrationTestCase(unittest.TestCase):

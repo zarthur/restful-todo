@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
 import os
-from app import create_app, db
-from app.models import Todo
+
 from flask.ext.script import Manager, Shell
+
+from app import create_app, db
+from models import Todo
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)

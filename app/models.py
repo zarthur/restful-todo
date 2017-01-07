@@ -1,9 +1,10 @@
+from datetime import datetime
+from uuid import uuid4
+
 import bcrypt
 
-from datetime import datetime
-from . import db
-from app.exceptions import ValidationError
-from sqlalchemy import func
+from app import db
+from exceptions import ValidationError
 
 
 class User(db.Model):
@@ -28,7 +29,6 @@ class User(db.Model):
 class Todo(db.Model):
     __tablename__ = 'todos'
     id = db.Column('id', db.Integer, primary_key=True)
-    user_exposed_id = db.Column('user_exposed_id', db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     user = db.relationship("User")
     title = db.Column(db.String(50))
@@ -36,9 +36,10 @@ class Todo(db.Model):
     done = db.Column(db.Boolean)
     publication_date = db.Column(db.DateTime)
     priority = db.Column(db.Integer)
+    uuid = db.relationship(db.String)
 
-    def __init__(self, user: User, title: str, body: str, priority: int):
-        self.user_exposed_id = Todo._next_user_exposed_id(user)
+    def __init__(self, user: User, title: str, body: str, priority: int, done: bool, uuid: str):
+        self.uuid = uuid or str(uuid4())
         self.title = title
         self.body = body
         self.done = False
@@ -46,27 +47,23 @@ class Todo(db.Model):
         self.priority = priority
 
     @staticmethod
-    def _next_user_exposed_id(user):
-        previous_id = (Todo.query.with_entities(func.max(Todo.user_exposed_id))
-                       .filter(Todo.user_id == user.id).scalar())
-        return previous_id + 1 if previous_id is not None else 0
-
-    @staticmethod
     def from_json(user, json_post):
         title = json_post.get('title')
         body = json_post.get('body')
         priority = json_post.get("priority")
+        done = json_post.get("done", False)
+        uuid = json_post.get("uuid", str(uuid4()))
         if body is None or body == '':
                 raise ValidationError('post does not have a body')
-        return Todo(user, title, body, priority)
+        return Todo(user, title, body, priority, done, uuid)
 
     def to_json(self):
         todo_json = {
-            'id': self.user_exposed_id,
             'title': self.title,
             'body': self.body,
             'done': self.done,
-            'priority': self.priority
+            'priority': self.priority,
+            'uuid': self.uuid
         }
         return todo_json
 
