@@ -1,9 +1,5 @@
-# RESTful Todo Application
-A RESTful web-based Todo application in Python and Flask
-
-<!---
-[![Build Status](https://travis-ci.org/vahidR/restful-todo.svg?branch=master)](https://travis-ci.org/vahidR/restful-todo)
---->
+# RESTful Contacts Application
+A RESTful web-based Contacts application in Python and Flask
 
 This code is a modification of the code at
 [https://github.com/vahidR/restful-todo](https://github.com/vahidR/restful-todo).
@@ -63,11 +59,11 @@ Content-Length: 24
 }
 ```
 
-### GET the List of todos
+### GET the List of Contacts
 *Request*
 
 ```
-curl -u username:password -H "Accept: application/json" -i http://localhost:5000/todos/api/v1.0/todos
+curl -u username:password -H "Accept: application/json" -i http://localhost:5000/contacts/api/v1.0/contacts
 ```
 
 *Response*
@@ -80,30 +76,30 @@ Content-Type: application/json
 Content-Length: 265
 
 {
-  "todos": [
+  "contacts": [
     {
-      "body": "mow grass",
-      "done": false,
-      "uuid": "5494bb0a-e8c8-49b8-a584-ccdcc4f0e1f8",
-      "priority": 1,
-      "title": "grass"
+      "name": "bob",
+      "email": "bob@bob.com",
+      "address": "123 Main St",
+      "favorite": false,
+      "uuid": "5494bb0a-e8c8-49b8-a584-ccdcc4f0e1f8"
     },
     {
-      "body": "prepare dinner",
-      "done": false,
-      "uuid": "f012b899-3819-44fd-91c7-2f06fddffb99",
-      "priority": 3,
-      "title": "dinner"
+      "name": "sue",
+      "email": "sue@sue.com",
+      "address": "456 High St",
+      "favorite": true,
+      "uuid": "f012b899-3819-44fd-91c7-2f06fddffb99"
     }
   ]
 }
 ```
 
-### GET an individual todo
+### GET an individual contact
 *Request*
 
 ```
-curl -u username:password -H "Accept: application/json" -i http://localhost:5000/todos/api/v1.0/todo/<UUID>
+curl -u username:password -H "Accept: application/json" -i http://localhost:5000/contacts/api/v1.0/contact/<UUID>
 ```
 
 *Response*
@@ -116,20 +112,18 @@ Content-Type: application/json
 Content-Length: 116
 
 {
-  "todo": {
-    "body": "mow grass",
-    "done": false,
-    "uuid": "5494bb0a-e8c8-49b8-a584-ccdcc4f0e1f8",
-    "priority": 1,
-    "title": "grass"
-  }
+  "name": "bob",
+  "email": "bob@bob.com",
+  "address": "123 Main St",
+  "favorite": false,
+  "uuid": "5494bb0a-e8c8-49b8-a584-ccdcc4f0e1f8"
 }
 ```
 
-### POST a todo
+### POST a contact
 *Request*
 ```
-curl -u username:password -H "Content-Type: application/json" -X POST -d '{"title":"dinner", "body":"prepare dinner", "priority": 3}' -i http://localhost:5000/todos/api/v1.0/todo/create
+curl -u username:password -H "Content-Type: application/json" -X POST -d '{"name":"sue", "email":"sue@sue.com", "address": "456 High St", "favorite": true}' -i http://localhost:5000/contacts/api/v1.0/contact/create
 ```
 
 *Response*
@@ -141,19 +135,19 @@ Content-Type: application/json
 Content-Length: 96
 
 {
-  "body": "prepare dinner",
-  "done": false,
-  "uuid": "f012b899-3819-44fd-91c7-2f06fddffb99",
-  "priority": 3,
-  "title": "dinner"
+  "name": "sue",
+  "email": "sue@sue.com",
+  "address": "456 High St",
+  "favorite": true,
+  "uuid": "f012b899-3819-44fd-91c7-2f06fddffb99"
 }
 ```
 
-### UPDATE a todo
+### UPDATE a contact
 *Request*
 
 ```
-curl -u username:password -H "Content-Type: application/json" -X PUT -d '{"title":"dinner", "body":"eat dinner", "priority": 2}' -i http://localhost:5000/todos/api/v1.0/todo/update/<UUID>
+curl -u username:password -H "Content-Type: application/json" -X PUT -d '{"email": "sue@email.com"}' -i http://localhost:5000/contacts/api/v1.0/contact/update/<UUID>
 ```
 
 *Response*
@@ -166,21 +160,19 @@ Content-Type: application/json
 Content-Length: 118
 
 {
-  "todo": {
-    "body": "eat dinner",
-    "done": false,
-    "id": "f012b899-3819-44fd-91c7-2f06fddffb99",
-    "priority": 2,
-    "title": "dinner"
-  }
+  "name": "sue",
+  "email": "sue@email.com",
+  "address": "456 High St",
+  "favorite": true,
+  "uuid": "f012b899-3819-44fd-91c7-2f06fddffb99"
 }
 ```
 
-### DELETE a todo
+### DELETE a contact
 *Request*
 
 ```
-curl -u username:password -H "Accept: application/json" -X DELETE -i http://localhost:5000/todos/api/v1.0/todo/delete/<UUID>
+curl -u username:password -H "Accept: application/json" -X DELETE -i http://localhost:5000/contacts/api/v1.0/contact/delete/<UUID>
 ```
 
 *Response*
@@ -193,6 +185,6 @@ Content-Type: application/json
 Content-Length: 31
 
 {
-  "result": "Todo deleted."
+  "result": "Contact deleted."
 }
 ```
