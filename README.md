@@ -116,13 +116,11 @@ Content-Type: application/json
 Content-Length: 116
 
 {
-  "todo": {
     "body": "mow grass",
     "done": false,
     "uuid": "5494bb0a-e8c8-49b8-a584-ccdcc4f0e1f8",
     "priority": 1,
     "title": "grass"
-  }
 }
 ```
 
@@ -166,13 +164,11 @@ Content-Type: application/json
 Content-Length: 118
 
 {
-  "todo": {
     "body": "eat dinner",
     "done": false,
     "id": "f012b899-3819-44fd-91c7-2f06fddffb99",
     "priority": 2,
     "title": "dinner"
-  }
 }
 ```
 

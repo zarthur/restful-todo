@@ -1,4 +1,3 @@
-from datetime import datetime
 from uuid import uuid4
 
 import bcrypt
@@ -34,20 +33,19 @@ class Todo(db.Model):
     title = db.Column(db.String(50))
     body = db.Column(db.String)
     done = db.Column(db.Boolean)
-    publication_date = db.Column(db.DateTime)
     priority = db.Column(db.Integer)
     uuid = db.relationship(db.String)
 
-    def __init__(self, user: User, title: str, body: str, priority: int, done: bool, uuid: str):
+    def __init__(self, title: str, body: str, priority: int,
+                 done: bool = False, uuid: str = None):
         self.uuid = uuid or str(uuid4())
         self.title = title
         self.body = body
-        self.done = False
-        self.publication_date = datetime.utcnow()
+        self.done = done
         self.priority = priority
 
     @staticmethod
-    def from_json(user, json_post):
+    def from_json(json_post):
         title = json_post.get('title')
         body = json_post.get('body')
         priority = json_post.get("priority")
@@ -55,7 +53,7 @@ class Todo(db.Model):
         uuid = json_post.get("uuid", str(uuid4()))
         if body is None or body == '':
                 raise ValidationError('post does not have a body')
-        return Todo(user, title, body, priority, done, uuid)
+        return Todo(title, body, priority, done, uuid)
 
     def to_json(self):
         todo_json = {
