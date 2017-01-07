@@ -36,12 +36,13 @@ class Contact(db.Model):
     address = db.Column(db.String)
     uuid = db.relationship(db.String)
 
-    def __init__(self, name: str, email: str, address: str, favorite: bool, uuid: str = None):
+    def __init__(self, name: str, email: str, address: str,
+                 favorite: bool = False, uuid: str = None):
         self.uuid = uuid or str(uuid4())
         self.name = name
         self.email = email
         self.address = address
-        self.favorite = favorite or False
+        self.favorite = favorite
 
     @staticmethod
     def from_json(json_post):
