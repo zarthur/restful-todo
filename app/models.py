@@ -3,7 +3,7 @@ from uuid import uuid4
 import bcrypt
 
 from app import db
-from exceptions import ValidationError
+from .exceptions import ValidationError
 
 
 class User(db.Model):
@@ -34,7 +34,7 @@ class Todo(db.Model):
     body = db.Column(db.String)
     done = db.Column(db.Boolean)
     priority = db.Column(db.Integer)
-    uuid = db.relationship(db.String)
+    uuid = db.Column(db.String)
 
     def __init__(self, title: str, body: str, priority: int,
                  done: bool = False, uuid: str = None):
