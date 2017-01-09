@@ -28,9 +28,3 @@ def internal_server_error(error):
         response.status_code = 500
         return response
     return render_template('500.html'), 500
-
-@main.app_errorhandler(301)
-def moved_permanently(error):
-    response = jsonify({'error': 'moved permanently'})
-    response.status_code = 301
-    return response

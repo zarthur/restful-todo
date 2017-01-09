@@ -3,7 +3,7 @@ from uuid import uuid4
 import bcrypt
 
 from app import db
-from exceptions import ValidationError
+from .exceptions import ValidationError
 
 
 class User(db.Model):
@@ -34,7 +34,7 @@ class Contact(db.Model):
     email = db.Column(db.String)
     favorite = db.Column(db.Boolean)
     address = db.Column(db.String)
-    uuid = db.relationship(db.String)
+    uuid = db.Column(db.String)
 
     def __init__(self, name: str, email: str, address: str,
                  favorite: bool = False, uuid: str = None):
@@ -53,7 +53,7 @@ class Contact(db.Model):
         uuid = json_post.get("uuid", str(uuid4()))
         if name is None or name == '':
                 raise ValidationError('post does not have a name')
-        return Todo(name, email, address, favorite, uuid)
+        return Contact(name, email, address, favorite, uuid)
 
     def to_json(self):
         todo_json = {
