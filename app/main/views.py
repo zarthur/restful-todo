@@ -1,3 +1,4 @@
+from datetime import date
 from flask import (g, render_template, abort, request, make_response, jsonify)
 from flask_httpauth import HTTPBasicAuth
 
@@ -110,6 +111,9 @@ def update_todo(uuid):
     todo_item.body = request.json.get('body', todo_item.body)
     todo_item.priority = request.json('priority', todo_item.priority)
     todo_item.done = request.json.get('done', todo_item.done)
+    todo_item.date_ = (date(request.json.get('date'))
+                       if request.json.get('date') else todo_item.date_)
+    todo_item.category = request.json.get('category', todo_item.category)
     db.session.add(todo_item)
     db.session.commit()
     return jsonify(todo_item.to_json()), 200

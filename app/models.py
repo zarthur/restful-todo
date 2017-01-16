@@ -1,3 +1,4 @@
+from datetime import date
 from uuid import uuid4
 
 import bcrypt
@@ -35,12 +36,16 @@ class Todo(db.Model):
     done = db.Column(db.Boolean)
     priority = db.Column(db.Integer)
     uuid = db.Column(db.String)
+    date_ = db.Column(db.Date)
+    category = db.Column(db.String)
 
-    def __init__(self, title: str, body: str, priority: int,
-                 done: bool = False, uuid: str = None):
+    def __init__(self, title: str, body: str, priority: int, date_: date,
+                 category: str, done: bool = False, uuid: str = None):
         self.uuid = uuid or str(uuid4())
         self.title = title
         self.body = body
+        self.date_ = date_
+        self.category = category
         self.done = done
         self.priority = priority
 
@@ -49,11 +54,13 @@ class Todo(db.Model):
         title = json_post.get('title')
         body = json_post.get('body')
         priority = json_post.get("priority")
+        date_ = date(json_post.get("date", str(date.today())))
+        category = json_post.get("category")
         done = json_post.get("done", False)
         uuid = json_post.get("uuid", str(uuid4()))
         if body is None or body == '':
                 raise ValidationError('post does not have a body')
-        return Todo(title, body, priority, done, uuid)
+        return Todo(title, body, priority, date_, category, done, uuid)
 
     def to_json(self):
         todo_json = {
@@ -61,6 +68,8 @@ class Todo(db.Model):
             'body': self.body,
             'done': self.done,
             'priority': self.priority,
+            'date': str(self.date_),
+            'category': str(self.category),
             'uuid': self.uuid
         }
         return todo_json
