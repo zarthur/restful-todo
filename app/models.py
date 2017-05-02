@@ -36,7 +36,7 @@ class Todo(db.Model):
     done = db.Column(db.Boolean)
     priority = db.Column(db.Integer)
     uuid = db.Column(db.String)
-    date_ = db.Column(db.Date)
+    date_ = db.Column(db.String)
     category = db.Column(db.String)
 
     def __init__(self, title: str, body: str, priority: int, date_: date,
