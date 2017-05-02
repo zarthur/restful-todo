@@ -39,7 +39,7 @@ class Todo(db.Model):
     date_ = db.Column(db.String)
     category = db.Column(db.String)
 
-    def __init__(self, title: str, body: str, priority: int, date_: date,
+    def __init__(self, title: str, body: str, priority: int, date_: str,
                  category: str, done: bool = False, uuid: str = None):
         self.uuid = uuid or str(uuid4())
         self.title = title
@@ -54,7 +54,7 @@ class Todo(db.Model):
         title = json_post.get('title')
         body = json_post.get('body')
         priority = json_post.get("priority")
-        date_ = date(json_post.get("date", str(date.today())))
+        date_ = json_post.get("date", str(date.today()))
         category = json_post.get("category")
         done = json_post.get("done", False)
         uuid = json_post.get("uuid", str(uuid4()))

@@ -93,6 +93,7 @@ def create_todo():
     """RESTful creating a todo"""
     if not request.json:
         abort(400)
+    print(type(request.json))
     todo = Todo.from_json(request.json)
     todo.user = g.user
     db.session.add(todo)
@@ -109,7 +110,7 @@ def update_todo(uuid):
     todo_item = _get_todo_or_404(g.user, uuid)
     todo_item.title = request.json.get('title', todo_item.title)
     todo_item.body = request.json.get('body', todo_item.body)
-    todo_item.priority = request.json('priority', todo_item.priority)
+    todo_item.priority = request.json.get('priority', todo_item.priority)
     todo_item.done = request.json.get('done', todo_item.done)
     todo_item.date_ = (date(request.json.get('date'))
                        if request.json.get('date') else todo_item.date_)
