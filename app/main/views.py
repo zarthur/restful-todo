@@ -79,7 +79,7 @@ def get_todos():
     return jsonify({'todos': [todo.to_json() for todo in todos]}), 200
 
 
-@main.route('/todos/api/v1.0/todo/<str:uuid>', methods=['GET'])
+@main.route('/todos/api/v1.0/todo/<string:uuid>', methods=['GET'])
 @auth.login_required
 def get_todo(uuid):
     """RESTful getting a todo"""
@@ -100,7 +100,7 @@ def create_todo():
     return jsonify(todo.to_json()), 201
 
 
-@main.route('/todos/api/v1.0/todo/update/<str:uuid>', methods=['PUT'])
+@main.route('/todos/api/v1.0/todo/update/<string:uuid>', methods=['PUT'])
 @auth.login_required
 def update_todo(uuid):
     """RESTful updating a todo"""
@@ -119,7 +119,7 @@ def update_todo(uuid):
     return jsonify(todo_item.to_json()), 200
 
 
-@main.route('/todos/api/v1.0/todo/delete/<str:uuid>', methods=['DELETE'])
+@main.route('/todos/api/v1.0/todo/delete/<string:uuid>', methods=['DELETE'])
 @auth.login_required
 def delete_todo(uuid):
     """RESTFUL deleting a todo"""
